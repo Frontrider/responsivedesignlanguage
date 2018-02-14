@@ -1,0 +1,15 @@
+<rdl>
+<head>
+/*media:mediaId:min width:max width:width, marked by w:height,marked by h*/
+<m:one:m0:x250:w95w:h20px>
+</head>
+<body>
+
+<l>
+<c:@one:@one></c>
+</l>
+
+</body>
+</rdl>
+/*<l> layer*/
+/*<c> card*/
