@@ -52,12 +52,14 @@ We put down 2 ":" characters, and just leave out the left attribute from in betw
 Media quarries not currently implemented but the plan follows:
 
 ```
-<m:{name}:{width}:{heigth}:{left}:{top}>
+<m:{name}:{width*height}:{width}:{heigth}:{left}:{top}>
 ```
+
 It can be identified via the responsive quarry.
 ```
 <{tag}:@{name}>{text}</{tag}>
 ```
+
 It can also reference the sizes of the quarry.
 ```
 <{tag}:@{name}:@{name}:@{name}:@{name}>{text}</{tag}>
