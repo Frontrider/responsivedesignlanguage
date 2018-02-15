@@ -65,11 +65,12 @@ It can also reference the sizes of the quarry.
 
 ### Identifiers
 
-The plan is to have a single identifier, which can be shared between many tags.
+The plan is to use css selector like identifiers
 How its implemented from css side, is up to them, this tag should only receive basic styling (and animations).
 The fancier elements should be in the text.
 ```
 <{tag}:#{idname}:{width}:{heigth}:{left}:{top}>{text}</{tag}>
+<{tag}:.{classname}:{width}:{heigth}:{left}:{top}>{text}</{tag}>
 ```
 
 
