@@ -29,7 +29,6 @@ class RDLParser(private val code: String) {
             card = card.replace("</c>", "")
             val cardData = card.split(">")
             val properties = cardData[0].split(":")
-            println(properties)
             val width = if (properties.isNotEmpty())
                 properties[0]
             else

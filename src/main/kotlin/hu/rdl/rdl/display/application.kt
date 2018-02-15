@@ -16,12 +16,13 @@ var screenHeight = 250.0
 class DisplayDemo : Application() {
 
     override fun start(primaryStage: Stage) {
-        val file = "<l>\n" +
-                "<c:100px:200px>card1</c>\n" +
-                "<c:100px:200px>card1.2</c>\n" +
-                "<c:100px:200px>card1.3</c>\n" +
-                "<c:100w:200px::10px>cardwide</c>\n" +
-                "</l>\n"
+        val file = """"<l>
+                <c:1/5:200px:1/10>card1</c>
+                <c:2/5:200px>card1.2</c>
+                <c:1/5:200px>card1.3</c>
+                <c:100w:200px::10px>cardwide</c>
+                </l>
+               """
         val parser = RDLParser(file)
         val document = parser.parse()
 
@@ -29,6 +30,7 @@ class DisplayDemo : Application() {
         val root = Group()
         val canvas = Canvas(screenWidth, screenHeight)
         val gc = canvas.graphicsContext2D
+
         gc.stroke = Color.BLACK
         gc.fill = Color.BEIGE
         gc.stroke()
@@ -55,7 +57,6 @@ class DisplayDemo : Application() {
         primaryStage.show()
     }
 
-
     private fun drawCards(document: List<List<DesignObject>>, gc: GraphicsContext) {
         gc.clearRect(0.0, 0.0, screenWidth, screenHeight)
         var widthCache = 0.0
@@ -63,56 +64,10 @@ class DisplayDemo : Application() {
         var maxHeight = 0.0
         document.forEach {
             it.forEach {
-                var width = 0.0
-                var height = 0.0
-                var top = 0.0
-                var left = 0.0
-
-                if (it.width.isNotEmpty()) {
-                    if (it.width.length > 3)
-                        if (it.width[it.width.length - 2].toString() + it.width[it.width.length - 1] == "px") {
-                            val widthData = it.width.removeRange(it.width.length - 2 until it.width.length).toDouble()
-                            width = widthData
-                        }
-                    if (width == 0.0 && it.width[it.width.length - 1] == 'w') {
-                        val widthData = it.width.removeRange(it.width.length - 1 until it.width.length).toDouble()
-                        width = screenWidth / 100 * widthData
-                    }
-
-
-                }
-                if (it.left.isNotEmpty()) {
-                    if (it.left.length > 2)
-                        if (it.left[it.left.length - 2].toString() + it.left[it.left.length - 1] == "px") {
-                            val leftData = it.left.removeRange(it.left.length - 2 until it.left.length)
-                            left = leftData.toDouble()
-                        }
-                    if (left == 0.0 && it.left[it.left.length - 1] == 'w') {
-                        val leftData = it.left.removeRange(it.left.length - 1 until it.left.length)
-                        left = screenWidth / 100 * leftData.toDouble()
-                    }
-                }
-                if (it.height.isNotEmpty()) {
-
-                    if (it.height.length > 3)
-                        if (it.height[it.height.length - 2].toString() + it.height[it.height.length - 1] == "px") {
-                            val heightData = it.height.removeRange(it.height.length - 2 until it.height.length).toDouble()
-                            height = heightData
-                        }
-                    if (height == 0.0 && it.height[it.height.length - 1] == 'w') {
-                        val heightData = it.height.removeRange(it.height.length - 1 until it.height.length)
-                        height = screenWidth / 100 * heightData.toDouble()
-                    }
-                }
-
-                if (it.top.isNotEmpty()) {
-                    if (it.top.length > 2)
-                        if (it.top[it.top.length - 2].toString() + it.top[it.top.length - 1] == "px") {
-                            val topData = it.top.removeRange(it.top.length - 2 until it.top.length).toDouble()
-                            top = topData
-                        }
-                }
-
+                val width = SizeCalculator.calculate(it.width)
+                val height = SizeCalculator.calculate(it.height)
+                val top = SizeCalculator.calculate(it.top)
+                val left = SizeCalculator.calculate(it.left)
 
                 if (maxHeight < height)
                     maxHeight = height
