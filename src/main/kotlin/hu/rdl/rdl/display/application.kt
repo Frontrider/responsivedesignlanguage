@@ -17,10 +17,14 @@ class DisplayDemo : Application() {
 
     override fun start(primaryStage: Stage) {
         val file = """"<l>
-                <c:1/5:200px:1/10>card1</c>
-                <c:2/5:200px>card1.2</c>
-                <c:1/5:200px>card1.3</c>
-                <c:100w:200px::10px>cardwide</c>
+                <c:100px:200px:10px>card1</c>
+                <c:100px:200px>card1.2</c>
+                <c:100px:200px>card1.3</c>
+                /*<c:100w:200px::10px>cardwide</c>*/
+                </l>
+                <l>
+                <c:1/2:100px></c>
+                <c:1/2:150px></c>
                 </l>
                """
         val parser = RDLParser(file)
@@ -59,26 +63,27 @@ class DisplayDemo : Application() {
 
     private fun drawCards(document: List<List<DesignObject>>, gc: GraphicsContext) {
         gc.clearRect(0.0, 0.0, screenWidth, screenHeight)
-        var widthCache = 0.0
-        var heightCache = 0.0
-        var maxHeight = 0.0
+
+        var layerCount = 0
         document.forEach {
+            gc.stroke =
+                    if (layerCount > 0)
+                        Color.BLACK
+                    else
+                        Color.AQUA
+            layerCount++
+            var widthCache = 0.0
+            var maxHeight = 0.0
+            var heightCache = 0.0
             it.forEach {
-                val width = SizeCalculator.calculate(it.width)
-                val height = SizeCalculator.calculate(it.height)
-                val top = SizeCalculator.calculate(it.top)
-                val left = SizeCalculator.calculate(it.left)
-
-                if (maxHeight < height)
-                    maxHeight = height
-
-                if (widthCache + width > screenWidth) {
-                    heightCache += maxHeight
-                    widthCache = 0.0
-                    maxHeight = 0.0
-                }
-                gc.strokeRect(widthCache + left, heightCache + top, width, height)
-                widthCache += width + left
+                println("height cache before calculation: $heightCache")
+                val positionData = PositionCalculator.calculate(it.height, it.width, it.left, it.top, widthCache, heightCache, maxHeight)
+                widthCache = positionData.widthCache
+                gc.strokeRect(positionData.x, positionData.y + heightCache, positionData.width, positionData.height)
+                widthCache += positionData.width
+                heightCache += positionData.heightCache
+                println("height cache after calculation: $heightCache")
+                maxHeight = positionData.maxHeight
 
             }
         }
