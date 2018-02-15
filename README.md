@@ -31,7 +31,7 @@ All the resizeable tags follow the this syntax:
 ```
 <{tag}:{width}:{heigth}:{left}:{top}>{text}</{tag}>
 ```
-Anything can be left out exept the tag.
+Anything can be left out except the tag.
 
 Example:
 If we want to leave out left and we want to have a top attribute
@@ -40,20 +40,25 @@ If we want to leave out left and we want to have a top attribute
 <c:100w:200px::10px>cardwide</c>
 ```
 
-We put down 2 ":" characters, and just leave out the left atribute from in between.
+Currently we use standard c like multiline comments, for convenience.
+
+```
+/*<c:100w:200px>cardwide</c>*/ 
+```
+We put down 2 ":" characters, and just leave out the left attribute from in between.
 
 ### Media
 
-Media querries not currently implemented but the plan follows:
+Media quarries not currently implemented but the plan follows:
 
 ```
 <m:{name}:{width}:{heigth}:{left}:{top}>
 ```
-It can be identified via the responsive querry.
+It can be identified via the responsive quarry.
 ```
 <{tag}:@{name}>{text}</{tag}>
 ```
-It can also reference the sizes of the query.
+It can also reference the sizes of the quarry.
 ```
 <{tag}:@{name}:@{name}:@{name}:@{name}>{text}</{tag}>
 ```
@@ -61,7 +66,7 @@ It can also reference the sizes of the query.
 ### Identifiers
 
 The plan is to have a single identifier, which can be shared between many tags.
-How its implemented from css side, is up to them, this tag should only recieve basic styling (and animations).
+How its implemented from css side, is up to them, this tag should only receive basic styling (and animations).
 The fancier elements should be in the text.
 ```
 <{tag}:#{idname}:{width}:{heigth}:{left}:{top}>{text}</{tag}>
@@ -75,8 +80,8 @@ Text is a "secondary" member.
 Which means that it can only sit inside primary members, and at the current state of the concept,
 it will only render if its parent has no responsive child elements.
 
-Because text is a secondary member, formatting can be more free whitout breaking the responsive nature of its parents. 
-Which means that all the currently existing css formatting methods should work for it, whitout breaking anything.
+Because text is a secondary member, formatting can be more free without breaking the responsive nature of its parents. 
+Which means that all the currently existing css formatting methods should work for it, without breaking anything.
 (it could even render outside its parent)
 
 The current concept is that the syntax would be like bbcode, to mark its secondary nature, and distinguish it from the main elements.
