@@ -1,12 +1,10 @@
 package hu.rdl.rdl.display
 
+import hu.rdl.rdl.language.objects.SizeStorage
+
 object PositionCalculator {
 
-    fun calculate(height: String, width: String, left: String, top: String, widthCache: Double, heightCache: Double, maxHeight: Double): PositionData {
-        val widthValue = SizeCalculator.calculate(width)
-        val heightValue = SizeCalculator.calculate(height)
-        val topValue = SizeCalculator.calculate(top)
-        val leftValue = SizeCalculator.calculate(left)
+    fun calculate(height: SizeStorage, width: SizeStorage, left: SizeStorage, top: String, widthCache: Double, heightCache: Double, maxHeight: Double): PositionData {
         var localWidthCache = widthCache
         var localHeightCache = heightCache
         var localMaxHeight = maxHeight

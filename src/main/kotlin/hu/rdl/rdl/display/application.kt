@@ -1,7 +1,7 @@
 package hu.rdl.rdl.display
 
-import hu.rdl.rdl.language.DesignObject
-import hu.rdl.rdl.language.RDLParser
+import hu.rdl.rdl.language.objects.DesignObject
+import hu.rdl.rdl.language.parser.RDLParser
 import javafx.application.Application
 import javafx.scene.Group
 import javafx.scene.Scene
@@ -16,7 +16,12 @@ var screenHeight = 250.0
 class DisplayDemo : Application() {
 
     override fun start(primaryStage: Stage) {
-        val file = """"<l>
+        val file =
+                """
+                <m:col-1-4:x100*:100w:200px>
+                <m:col-1-4:m100*:100w:1/2>
+                <m:col-1-4:m200*:100w:1/4>
+                <l>
                 <c:100px:200px:10px>card1</c>
                 <c:100px:200px>card1.2</c>
                 <c:100px:200px>card1.3</c>
@@ -26,9 +31,9 @@ class DisplayDemo : Application() {
                 <c:1/2:100px></c>
                 <c:1/2:150px></c>
                 </l>
-               """
-        val parser = RDLParser(file)
-        val document = parser.parse()
+                """
+        val parser = RDLParser()
+        val document = parser.parse(file)
 
         primaryStage.title = "RDL display test"
         val root = Group()

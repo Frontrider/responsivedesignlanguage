@@ -1,19 +1,20 @@
 package hu.rdl.rdl
 
-import hu.rdl.rdl.language.RDLParser
+import hu.rdl.rdl.language.objects.print
+import hu.rdl.rdl.language.parser.RDLParser
 
 fun main(args: Array<String>) {
     //card parameter order: width,height:left:top
-    val file = "<l>\n" +
-            "<c:45%:20px:5%>card1</c>\n" +
-            "<c:45%:20px:5%>card1.2</c>\n" +
-            "<c:90%:20px:5%>cardwide/*comment*/</c>\n" +
-            "</l>\n/*comment!*/"+
+    val file = "<doc>\n" +
             "<l>\n" +
-            "<c:100%:40px></c>\n" +
-            "</l>"
-    val parser = RDLParser(file)
-    val document = parser.parse()
-    println(document)
-    
+            "<c:45%:20px:5%>card1</>\n" +
+            "<c:45%:20px:5%>card1.2</>\n" +
+            "<c:90%:20px:5%>cardwide/*comment*/</>\n" +
+            "</>\n/*comment!*/"+
+            "<l>\n" +
+            "<c:100%:40px></>\n" +
+            "</></>"
+    val parser = RDLParser()
+    val document = parser.parse(file)
+    println(document.print())
 }
